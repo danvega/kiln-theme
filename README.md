@@ -6,6 +6,10 @@ A warm dark and light theme for JetBrains IDEs. It uses charcoal and cream surfa
 
 ![Kiln Light](images/screenshot-light.webp)
 
+## Why "Kiln"
+
+A kiln is where clay gets fired. The theme's accent is a warm clay orange, set against charcoal and cream. The palette was inspired by one of my favorite tools. I loved its warm, calm look and wanted that same feel in my IDE every day.
+
 ## Install
 
 You need IntelliJ IDEA 2026.2 or newer.
