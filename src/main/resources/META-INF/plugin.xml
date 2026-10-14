@@ -1,0 +1,22 @@
+<idea-plugin>
+    <id>dev.danvega.kiln-theme</id>
+    <name>Kiln Theme</name>
+    <vendor url="https://www.danvega.dev">Dan Vega</vendor>
+
+    <description><![CDATA[
+    <p>A warm dark and light theme: charcoal and cream surfaces, a clay orange accent, and calm, earthy syntax colors.</p>
+    <ul>
+      <li><b>Kiln Dark</b>: warm charcoal editor with a darker frame.</li>
+      <li><b>Kiln Light</b>: cream editor with a soft sand frame.</li>
+    </ul>
+    <p>Built on the Islands themes, so tool windows, tabs, and popups all follow the palette. Each variant ships with a matching editor color scheme and terminal colors.</p>
+    <p>Choose it in <b>Settings | Appearance &amp; Behavior | Appearance | Theme</b>.</p>
+    ]]></description>
+
+    <depends>com.intellij.modules.platform</depends>
+
+    <extensions defaultExtensionNs="com.intellij">
+        <themeProvider id="dev.danvega.kiln-dark" path="/themes/kiln-dark.theme.json"/>
+        <themeProvider id="dev.danvega.kiln-light" path="/themes/kiln-light.theme.json"/>
+    </extensions>
+</idea-plugin>
