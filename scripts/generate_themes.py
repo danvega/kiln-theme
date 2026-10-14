@@ -4,22 +4,42 @@ Writes src/main/resources/themes/kiln-{dark,light}.theme.json and the matching
 editor color schemes (.xml) from the palettes defined below.
 
 The themes inherit from JetBrains' Islands themes, so this script reads the Islands
-color tokens from a local IntelliJ install. Edit a palette, then run:
+color tokens from an IntelliJ install. Edit a palette, then run:
 
-    python3 scripts/generate_themes.py [path/to/IntelliJ IDEA.app]
+    ./gradlew generateThemes
+
+That passes the IDE Gradle builds against, so everyone generates from the same
+version. To use another install, run the script directly with its path:
+
+    python3 scripts/generate_themes.py "/Applications/IntelliJ IDEA.app"
 """
 import json, math, sys, re, zipfile
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
 OUT = ROOT / 'src/main/resources/themes'
-IDE = Path(sys.argv[1] if len(sys.argv) > 1 else '/Applications/IntelliJ IDEA.app')
+ISLANDS = 'themes/islands/ManyIslands{}.theme.json'
+
+def find_islands_jar(ide):
+    """The jar inside an IntelliJ install that holds the Islands themes."""
+    for lib in (ide / 'lib', ide / 'Contents/lib'):
+        for jar in sorted(lib.glob('*.jar')):
+            with zipfile.ZipFile(jar) as z:
+                if ISLANDS.format('Dark') in z.namelist():
+                    return jar
+    sys.exit(f'No Islands themes found in {ide}. Pass the folder of IntelliJ IDEA 2026.2 or newer.')
+
+if len(sys.argv) != 2:
+    sys.exit('Usage: python3 scripts/generate_themes.py <IntelliJ install folder>  (or run ./gradlew generateThemes)')
+JAR = find_islands_jar(Path(sys.argv[1]).expanduser())
 
 def islands_colors(variant):
     """Color tokens of the bundled Islands Dark or Islands Light theme."""
-    jar = next(IDE.glob('**/lib/intellij.platform.ide.impl.jar'))
-    with zipfile.ZipFile(jar) as z:
-        return json.loads(z.read(f'themes/islands/ManyIslands{variant}.theme.json'))['colors']
+    with zipfile.ZipFile(JAR) as z:
+        colors = json.loads(z.read(ISLANDS.format(variant)))['colors']
+    if 'main-window-bg' not in colors:
+        sys.exit(f'{JAR} has the old Islands colors. Kiln needs IntelliJ IDEA 2026.2 or newer.')
+    return colors
 
 # ---------- color math (OKLab) ----------
 def srgb_to_lin(c):

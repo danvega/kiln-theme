@@ -1,0 +1,61 @@
+name: Build
+
+on:
+  push:
+    branches: [main]
+    tags: ['v*']
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: actions/setup-java@v6
+        with:
+          distribution: temurin
+          java-version: 21
+
+      - uses: gradle/actions/setup-gradle@v6
+
+      - name: Check the tag matches the plugin version
+        if: startsWith(github.ref, 'refs/tags/v')
+        run: |
+          version=$(grep '^pluginVersion=' gradle.properties | cut -d= -f2)
+          if [ "$GITHUB_REF_NAME" != "v$version" ]; then
+            echo "Tag $GITHUB_REF_NAME does not match pluginVersion $version in gradle.properties"
+            exit 1
+          fi
+
+      - name: Build the plugin
+        run: ./gradlew buildPlugin verifyPluginStructure
+
+      - name: Check the theme files match the palettes
+        run: |
+          ./gradlew generateThemes
+          git diff --exit-code src/main/resources/themes
+
+      - uses: actions/upload-artifact@v7
+        with:
+          name: kiln-theme
+          path: build/distributions/*.zip
+
+  release:
+    if: startsWith(github.ref, 'refs/tags/v')
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/download-artifact@v8
+        with:
+          name: kiln-theme
+
+      - name: Create the GitHub release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh release create "$GITHUB_REF_NAME" *.zip --repo "$GITHUB_REPOSITORY" --title "Kiln $GITHUB_REF_NAME" --generate-notes

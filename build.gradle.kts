@@ -30,8 +30,8 @@ intellijPlatform {
 
     pluginConfiguration {
         ideaVersion {
-            // 2025.3 is the first release with the Islands themes this plugin builds on.
-            sinceBuild = "253"
+            // 2026.2 is the first release with the Islands color tokens the themes override.
+            sinceBuild = "262"
             untilBuild = provider { null }
         }
     }
@@ -44,4 +44,10 @@ tasks.runIde {
         samples.asFile.absolutePath,
         samples.file("src/dev/danvega/todos/TodoService.java").asFile.absolutePath,
     )
+}
+
+tasks.register<Exec>("generateThemes") {
+    group = "kiln"
+    description = "Regenerates the theme files from the palettes in scripts/generate_themes.py."
+    commandLine("python3", "scripts/generate_themes.py", intellijPlatform.platformPath.toString())
 }

@@ -6,54 +6,66 @@ A warm dark and light theme for JetBrains IDEs. It uses charcoal and cream surfa
 
 ![Kiln Light](images/screenshot-light.jpg)
 
-## Tested with
+## Install
 
-IntelliJ IDEA 2026.2.3, Gradle 9.8.1, IntelliJ Platform Gradle Plugin 2.19.0, Java 26.
+You need IntelliJ IDEA 2026.2 or newer.
 
-The plugin supports IntelliJ-based IDEs 2025.3 and newer.
+1. Download `kiln-theme-<version>.zip` from the [latest release](../../releases/latest). Do not unzip it.
+2. In IntelliJ, open **Settings | Plugins**, click the gear icon, and choose **Install Plugin from Disk**. Pick the zip.
+3. Open **Settings | Appearance & Behavior | Appearance** and set **Theme** to **Kiln Dark** or **Kiln Light**.
 
-## What you need
+The editor color scheme switches with the theme. If your code keeps its old colors, set **Settings | Editor | Color Scheme** to the matching Kiln scheme.
 
-- A JDK 17 or newer to run Gradle.
-- IntelliJ IDEA 2025.3 or newer.
-- Python 3, only if you want to change the colors.
+Kiln is tested with IntelliJ IDEA 2026.2.3. Other JetBrains IDEs on 2026.2 or newer share the same theme system, but they are not tested yet.
 
-## Build and install
+## Build from source
+
+You need a JDK 17 or newer.
 
 ```bash
 ./gradlew buildPlugin
 ```
 
-This writes `build/distributions/kiln-theme-1.0.0.zip`. In IntelliJ, open **Settings | Plugins**, click the gear icon, and choose **Install Plugin from Disk**. Then pick **Kiln Dark** or **Kiln Light** in **Settings | Appearance & Behavior | Appearance | Theme**.
-
-By default the build downloads IntelliJ IDEA 2025.3 to compile against. To use the IDE you already have, pass its path:
+This writes `build/distributions/kiln-theme-0.1.0.zip`. The first build downloads IntelliJ IDEA 2026.2.3 to build against, which takes a few minutes. To use an IDE you already have, pass its install folder:
 
 ```bash
 ./gradlew buildPlugin -PlocalIdePath="/Applications/IntelliJ IDEA.app"
 ```
 
+On Windows and Linux, pass the folder that contains the IDE's `bin` and `lib` folders.
+
 ## Try it in a sandbox IDE
 
 ```bash
-./gradlew runIde -PlocalIdePath="/Applications/IntelliJ IDEA.app"
+./gradlew runIde
 ```
 
-This starts a separate IDE with the plugin installed and opens [samples/src/dev/danvega/todos/TodoService.java](samples/src/dev/danvega/todos/TodoService.java). The sample has keywords, strings, annotations, fields, constants, Javadoc, a TODO, a warning, and an error, so most syntax colors are on screen at once.
+This starts a separate IDE with the plugin installed and opens [samples/src/dev/danvega/todos/TodoService.java](samples/src/dev/danvega/todos/TodoService.java). The sample has keywords, strings, annotations, fields, constants, Javadoc, a TODO, a warning, and an error, so most syntax colors are on screen at once. Pick a Kiln theme in the sandbox's settings the first time.
 
 ## Change the colors
 
-The palettes live in [scripts/generate_themes.py](scripts/generate_themes.py). Edit the `DARK` or `LIGHT` dictionary, then regenerate the theme files:
+The palettes live in [scripts/generate_themes.py](scripts/generate_themes.py). Edit the `DARK` or `LIGHT` dictionary, then regenerate the theme files. You need Python 3.
 
 ```bash
-python3 scripts/generate_themes.py "/Applications/IntelliJ IDEA.app"
+./gradlew generateThemes
 ```
 
-The script rewrites the four files in [src/main/resources/themes](src/main/resources/themes). It also prints the contrast ratio of each syntax color against the editor background.
+This rewrites the four files in [src/main/resources/themes](src/main/resources/themes) and prints the contrast ratio of each syntax color against the editor background. Commit the regenerated files with your palette change. The build checks that they match the palettes.
 
-To try palette ideas before touching the plugin, open [preview/mockup.html](preview/mockup.html) in a browser. It is a mock IDE window with a color picker for every token.
+## Release a new version
+
+1. Set `pluginVersion` in [gradle.properties](gradle.properties).
+2. Commit, then tag the commit with the same version and push the tag:
+
+```bash
+git tag v0.1.0
+git push origin v0.1.0
+```
+
+The [Build workflow](.github/workflows/build.yml) builds the plugin, then creates a GitHub release with the zip attached. It stops if the tag and `pluginVersion` do not match.
 
 ## Good to know
 
-- Both themes inherit from the Islands themes (`Islands Dark` and `Islands Light`), the default look since 2025.3. That is why older IDE versions are not supported.
-- The Islands themes resolve their own named colors before a child theme's colors apply. Overriding one token, such as `accent-brand-bg`, does not reach the keys that point at it through another name. So the generator reads every Islands token from your IDE, resolves it through the Kiln palette, and writes all of them out as hex values. Do not hand-edit the generated `.theme.json` files.
-- The editor schemes use Darcula and Default as their parents. Darcula sets some Java and Kotlin keys directly, so the schemes set those keys too, not only the `DEFAULT_*` ones.
+- Kiln inherits from JetBrains' Islands themes (`Islands Dark` and `Islands Light`). Islands switched to its current color tokens in 2026.2, so older versions are not supported.
+- Islands resolves its own named colors before a child theme's colors apply. Overriding one token does not reach the keys that point at it through another name. So the generator reads every Islands token from the IDE, resolves it through the Kiln palette, and writes all of them out as hex values. Do not hand-edit the generated files.
+- The editor schemes use Darcula and Default as their parents. Those parents set some Java and Kotlin keys directly, so the schemes set those keys too, not only the `DEFAULT_*` ones.
