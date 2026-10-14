@@ -2,9 +2,9 @@
 
 A warm dark and light theme for JetBrains IDEs. It uses charcoal and cream surfaces, a clay orange accent, and calm, earthy syntax colors. Each variant recolors the whole IDE, the editor, and the terminal.
 
-![Kiln Dark](images/screenshot-dark.jpg)
+![Kiln Dark](images/screenshot-dark.webp)
 
-![Kiln Light](images/screenshot-light.jpg)
+![Kiln Light](images/screenshot-light.webp)
 
 ## Install
 
