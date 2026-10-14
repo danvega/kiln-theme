@@ -22,6 +22,10 @@ The editor color scheme switches with the theme. If your code keeps its old colo
 
 Kiln is tested with IntelliJ IDEA 2026.2.3. Other JetBrains IDEs on 2026.2 or newer share the same theme system, but they are not tested yet.
 
+## Feedback
+
+Kiln is new, and feedback helps a lot. If something looks off, is hard to read, or still shows the default colors, [open an issue](../../issues/new?template=theme-feedback.yml) with a screenshot.
+
 ## Build from source
 
 You need a JDK 17 or newer.

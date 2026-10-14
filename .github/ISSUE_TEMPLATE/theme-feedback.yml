@@ -1,0 +1,78 @@
+name: Theme feedback
+description: Something looks off, is hard to read, or still shows the default colors.
+title: "[Feedback] "
+labels: ["feedback"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for testing Kiln! A screenshot and a few details help me find and fix the problem fast.
+
+  - type: dropdown
+    id: variant
+    attributes:
+      label: Theme
+      options:
+        - Kiln Dark
+        - Kiln Light
+        - Both
+    validations:
+      required: true
+
+  - type: textarea
+    id: problem
+    attributes:
+      label: What looks wrong?
+      description: Say what you see and what you expected. For example, "selected text is hard to read" or "the debugger panel is still blue".
+    validations:
+      required: true
+
+  - type: input
+    id: where
+    attributes:
+      label: Where in the IDE?
+      description: The editor (and which language), a tool window, a dialog, a popup, the terminal, and so on.
+      placeholder: Python editor, Git log, Settings dialog
+    validations:
+      required: true
+
+  - type: textarea
+    id: screenshot
+    attributes:
+      label: Screenshot
+      description: Paste or drag a screenshot here.
+    validations:
+      required: true
+
+  - type: input
+    id: ide
+    attributes:
+      label: IDE and version
+      description: Copy it from Help | About (on macOS, IntelliJ IDEA | About IntelliJ IDEA).
+      placeholder: IntelliJ IDEA 2026.2.3, PyCharm 2026.2.1
+    validations:
+      required: true
+
+  - type: dropdown
+    id: os
+    attributes:
+      label: Operating system
+      options:
+        - macOS
+        - Windows
+        - Linux
+    validations:
+      required: true
+
+  - type: input
+    id: kiln-version
+    attributes:
+      label: Kiln version
+      description: Shown in Settings | Plugins.
+      placeholder: 0.1.0
+
+  - type: textarea
+    id: setup
+    attributes:
+      label: Anything else about your setup?
+      description: Compact mode, a custom font or font size, other theme or UI plugins, a high-contrast or very bright monitor.
