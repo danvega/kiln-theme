@@ -29,6 +29,7 @@
     <option name="WHITESPACES" value="d3cfc4"/>
     <option name="CONSOLE_BACKGROUND_KEY" value="faf9f5"/>
     <option name="EDITOR_GUTTER_BACKGROUND" value="faf9f5"/>
+    <option name="GRID_STRIPE_COLOR" value="f3f1ea"/>
     <option name="DOCUMENTATION_COLOR" value="ffffff"/>
     <option name="LOOKUP_COLOR" value="ffffff"/>
     <option name="NOTIFICATION_BACKGROUND" value="ffffff"/>
