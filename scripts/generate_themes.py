@@ -252,6 +252,8 @@ def scheme_xml(p, dark):
         'RIGHT_MARGIN_COLOR': p['border'], 'METHOD_SEPARATORS_COLOR': p['border'], 'TEARLINE_COLOR': p['border'],
         'WHITESPACES': p['whitespace'],
         'CONSOLE_BACKGROUND_KEY': p['bg'], 'EDITOR_GUTTER_BACKGROUND': p['bg'],
+        # alternate rows in the Data Editor grid (the Default parent paints them blue)
+        'GRID_STRIPE_COLOR': p['bg2'],
         'DOCUMENTATION_COLOR': p['raised'], 'LOOKUP_COLOR': p['raised'], 'NOTIFICATION_BACKGROUND': p['raised'],
         'INFORMATION_HINT': p['hintBg'], 'QUESTION_HINT': p['hintBg'], 'ERROR_HINT': p['errorHint'],
         'HINT_BORDER': p['border2'], 'RECENT_LOCATIONS_SELECTION': p['selectionMuted'],
