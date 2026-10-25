@@ -34,7 +34,7 @@ You need a JDK 17 or newer.
 ./gradlew buildPlugin
 ```
 
-This writes `build/distributions/kiln-theme-0.1.0.zip`. The first build downloads IntelliJ IDEA 2026.2.3 to build against, which takes a few minutes. To use an IDE you already have, pass its install folder:
+This writes `build/distributions/kiln-theme-0.1.1.zip`. The first build downloads IntelliJ IDEA 2026.2.3 to build against, which takes a few minutes. To use an IDE you already have, pass its install folder:
 
 ```bash
 ./gradlew buildPlugin -PlocalIdePath="/Applications/IntelliJ IDEA.app"
