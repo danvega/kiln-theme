@@ -1,7 +1,7 @@
 <idea-plugin>
     <id>dev.danvega.kiln-theme</id>
     <name>Kiln Theme</name>
-    <vendor url="https://www.danvega.dev">Dan Vega</vendor>
+    <vendor url="https://www.danvega.dev" email="danvega@gmail.com">Dan Vega</vendor>
 
     <description><![CDATA[
     <p>A warm dark and light theme: charcoal and cream surfaces, a clay orange accent, and calm, earthy syntax colors.</p>
@@ -12,6 +12,14 @@
     <p>Built on the Islands themes, so tool windows, tabs, and popups all follow the palette. Each variant ships with a matching editor color scheme and terminal colors.</p>
     <p>Choose it in <b>Settings | Appearance &amp; Behavior | Appearance | Theme</b>.</p>
     ]]></description>
+
+    <change-notes><![CDATA[
+    <h3>0.2.0</h3>
+    <ul>
+      <li>First release on JetBrains Marketplace.</li>
+      <li>Kiln Dark and Kiln Light, each with a matching editor color scheme and terminal colors.</li>
+    </ul>
+    ]]></change-notes>
 
     <depends>com.intellij.modules.platform</depends>
 

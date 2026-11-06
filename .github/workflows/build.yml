@@ -44,6 +44,17 @@ jobs:
           name: kiln-theme
           path: build/distributions/*.zip
 
+      - name: Publish to JetBrains Marketplace
+        if: startsWith(github.ref, 'refs/tags/v')
+        env:
+          PUBLISH_TOKEN: ${{ secrets.JETBRAINS_MARKETPLACE_TOKEN }}
+        run: |
+          if [ -z "$PUBLISH_TOKEN" ]; then
+            echo "JETBRAINS_MARKETPLACE_TOKEN is not set. Skipping the Marketplace upload."
+            exit 0
+          fi
+          ./gradlew publishPlugin
+
   release:
     if: startsWith(github.ref, 'refs/tags/v')
     needs: build

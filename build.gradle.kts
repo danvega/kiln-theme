@@ -35,6 +35,12 @@ intellijPlatform {
             untilBuild = provider { null }
         }
     }
+
+    publishing {
+        // Personal Access Token from the My Tokens page of your JetBrains Marketplace profile.
+        // The release workflow sets it from the JETBRAINS_MARKETPLACE_TOKEN secret.
+        token = providers.environmentVariable("PUBLISH_TOKEN")
+    }
 }
 
 tasks.runIde {
