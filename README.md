@@ -14,11 +14,12 @@ A kiln is where clay gets fired. The theme's accent is a warm clay orange, set a
 
 You need IntelliJ IDEA 2026.2 or newer.
 
-1. Download `kiln-theme-<version>.zip` from the [latest release](../../releases/latest). Do not unzip it.
-2. In IntelliJ, open **Settings | Plugins**, click the gear icon, and choose **Install Plugin from Disk**. Pick the zip.
-3. Open **Settings | Appearance & Behavior | Appearance** and set **Theme** to **Kiln Dark** or **Kiln Light**.
+1. In IntelliJ, open **Settings | Plugins**, pick the **Marketplace** tab, and search for **Kiln Theme**. Click **Install**.
+2. Open **Settings | Appearance & Behavior | Appearance** and set **Theme** to **Kiln Dark** or **Kiln Light**.
 
 The editor color scheme switches with the theme. If your code keeps its old colors, set **Settings | Editor | Color Scheme** to the matching Kiln scheme.
+
+To install a specific build instead, download `kiln-theme-<version>.zip` from the [releases page](../../releases). Do not unzip it. In **Settings | Plugins**, click the gear icon, choose **Install Plugin from Disk**, and pick the zip.
 
 Kiln is tested with IntelliJ IDEA 2026.2.3. Other JetBrains IDEs on 2026.2 or newer share the same theme system, but they are not tested yet.
 
@@ -63,14 +64,19 @@ This rewrites the four files in [src/main/resources/themes](src/main/resources/t
 ## Release a new version
 
 1. Set `pluginVersion` in [gradle.properties](gradle.properties).
-2. Commit, then tag the commit with the same version and push the tag:
+2. Update the `change-notes` in [plugin.xml](src/main/resources/META-INF/plugin.xml). JetBrains Marketplace shows them on the plugin page.
+3. Commit, then tag the commit with the same version and push the tag:
 
 ```bash
-git tag v0.1.0
-git push origin v0.1.0
+git tag v0.2.0
+git push origin v0.2.0
 ```
 
-The [Build workflow](.github/workflows/build.yml) builds the plugin, then creates a GitHub release with the zip attached. It stops if the tag and `pluginVersion` do not match.
+The [Build workflow](.github/workflows/build.yml) builds the plugin, uploads it to JetBrains Marketplace, and creates a GitHub release with the zip attached. It stops if the tag and `pluginVersion` do not match.
+
+The Marketplace upload needs a `JETBRAINS_MARKETPLACE_TOKEN` repository secret. Create a Personal Access Token on the **My Tokens** page of your Marketplace profile and add it under the repository's **Settings | Secrets and variables | Actions**. Without the secret, the workflow skips the upload and still creates the GitHub release. JetBrains reviews every version before it goes live, which usually takes about two business days.
+
+The first version of a plugin has to be uploaded by hand on the Marketplace website. Gradle publishing only works after that. Theme listings also need screenshots. The ones for Kiln are `marketplace-dark.png` and `marketplace-light.png` in [images](images).
 
 ## Good to know
 
